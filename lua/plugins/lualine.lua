@@ -5,7 +5,7 @@ local onedarkpro = {}
 
 onedarkpro.normal = {
     a = { bg = colors.green, fg = colors.bg },
-    b = { bg = colors.fg_gutter, fg = colors.green },
+    b = { bg = colors.none, fg = colors.green },
     c = { bg = colors.none, fg = colors.fg },
 }
 
@@ -37,11 +37,11 @@ onedarkpro.inactive = {
 }
 
 require('lualine').setup({
-  options = {
+    options = {
         icons_enabled = true,
         theme = onedarkpro,
         component_separators = '|',
         section_separators = '',
-  },
+    },
 })
 return {}
