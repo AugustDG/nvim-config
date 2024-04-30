@@ -2,7 +2,6 @@
 -- See `:help cmp`
 local cmp = require('cmp')
 local luasnip = require('luasnip')
-require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup({})
 
 cmp.setup({
@@ -10,6 +9,10 @@ cmp.setup({
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
+  },
+  window = {
+    border = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered()
   },
   completion = {
     completeopt = 'menu,menuone,noinsert',
@@ -20,18 +23,10 @@ cmp.setup({
     ['<C-Up>'] = cmp.mapping.scroll_docs(-4),
     ['<C-Down>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete({}),
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.mapping.confirm({
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        })
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
+    ['<Tab>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.complete_common_string()
