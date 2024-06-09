@@ -6,6 +6,7 @@ vim.g.copilot_tab_fallback = ""
 vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 
 vim.g.copilot_filetypes = {
+  "*"
 }
 
 return {}

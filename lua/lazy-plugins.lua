@@ -33,7 +33,7 @@ require('lazy').setup({
   },
 
   -- Copilot
-  -- 'github/copilot.vim',
+  'github/copilot.vim',
 
   {
     -- Autocompletion
@@ -132,6 +132,8 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+
+  "klen/nvim-config-local",
 
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
