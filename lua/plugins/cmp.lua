@@ -18,8 +18,6 @@ cmp.setup({
     completeopt = 'menu,menuone,noinsert',
   },
   mapping = cmp.mapping.preset.insert({
-    ['<Down>'] = cmp.mapping.select_next_item(),
-    ['<Up>'] = cmp.mapping.select_prev_item(),
     ['<C-Up>'] = cmp.mapping.scroll_docs(-4),
     ['<C-Down>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete({}),

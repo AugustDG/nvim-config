@@ -35,6 +35,9 @@ require('lazy').setup({
   -- Copilot
   'github/copilot.vim',
 
+  -- Precognition (helps learn motions)
+  'tris203/precognition.nvim',
+
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -49,22 +52,6 @@ require('lazy').setup({
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
-    },
-  },
-
-  {
-    -- NOTE: Yes, you can install new plugins here!
-    'mfussenegger/nvim-dap',
-    -- NOTE: And you can specify dependencies as well
-    dependencies = {
-      -- Creates a beautiful debugger UI
-      'rcarriga/nvim-dap-ui',
-
-      -- Installs the debug adapters for you
-      'williamboman/mason.nvim',
-      'jay-babu/mason-nvim-dap.nvim',
-
-      -- Add your own debuggers here
     },
   },
 
