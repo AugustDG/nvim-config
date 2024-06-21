@@ -16,6 +16,6 @@ require("telescope").load_extension("file_browser")
 
 local file_browser = require("telescope").extensions.file_browser
 
-vim.keymap.set("n", "<space>f", file_browser.file_browser)
+vim.keymap.set("n", "<space>sf", file_browser.file_browser, { desc = "[S]earch [F]ile browser" })
 
 return {}

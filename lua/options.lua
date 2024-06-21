@@ -3,10 +3,14 @@
 -- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
+vim.wo.relativenumber = true
+
+-- Save when switching buffers
+vim.o.autowriteall = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'

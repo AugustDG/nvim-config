@@ -32,6 +32,9 @@ require('lazy').setup({
     },
   },
 
+  -- Move Lines
+  'fedepujol/move.nvim',
+
   -- Copilot
   'github/copilot.vim',
 
