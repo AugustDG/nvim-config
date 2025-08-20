@@ -36,7 +36,7 @@ require('lazy').setup({
   'fedepujol/move.nvim',
 
   -- Copilot
-  'github/copilot.vim',
+  -- 'github/copilot.vim',
 
   -- Precognition (helps learn motions)
   'tris203/precognition.nvim',
@@ -45,10 +45,6 @@ require('lazy').setup({
     -- Autocompletion
     'hrsh7th/nvim-cmp',
     dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
@@ -111,7 +107,6 @@ require('lazy').setup({
     },
   },
 
-  "debugloop/telescope-undo.nvim",
   "nvim-telescope/telescope-file-browser.nvim",
 
   {
