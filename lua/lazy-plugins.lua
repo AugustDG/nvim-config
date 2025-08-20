@@ -24,6 +24,9 @@ require('lazy').setup({
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
 
+      -- Install and upgrade third party tools automatically
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+
       -- Useful status updates for LSP
       { 'j-hui/fidget.nvim' },
 

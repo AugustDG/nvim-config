@@ -1,4 +1,4 @@
-require('which-key').setup({})
+require('which-key').setup {}
 
 -- document existing key chains
 require('which-key').register {
@@ -10,6 +10,7 @@ require('which-key').register {
   ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
   ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+  ['<leader>m'] = { name = '[M]ason - LSP Tool Manager', _ = 'which_key_ignore' },
 }
 
 -- register which-key VISUAL mode
