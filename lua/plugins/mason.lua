@@ -45,7 +45,16 @@ end
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
-require('mason').setup()
+require('mason').setup {
+  ui = {
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗"
+    }
+  }
+}
+
 require('mason-lspconfig').setup()
 
 -- Enable the following language servers
@@ -56,14 +65,38 @@ require('mason-lspconfig').setup()
 --
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
+--
+-- Popular servers are enabled by default. To add a new server:
+-- 1. Add it to this servers table
+-- 2. Install with :Mason or restart neovim 
+-- 3. Configure any special settings if needed
 local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
-  -- tsserver = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
+  -- Web Development
+  html = { filetypes = { 'html', 'twig', 'hbs'} },
+  cssls = {},
+  
+  -- JavaScript/TypeScript  
+  tsserver = {},
+  
+  -- Python
+  pyright = {},
+  
+  -- Go
+  gopls = {},
+  
+  -- Rust
+  rust_analyzer = {},
+  
+  -- C/C++
+  clangd = {},
+  
+  -- JSON
+  jsonls = {},
+  
+  -- YAML
+  yamlls = {},
+  
+  -- Lua (with special nvim configuration)
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -86,6 +119,33 @@ local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
+}
+
+-- Setup mason-tool-installer for automatic installation of formatters and linters
+require('mason-tool-installer').setup {
+  ensure_installed = {
+    -- Formatters
+    'prettier',     -- js/ts/html/css formatter
+    'stylua',      -- lua formatter  
+    'black',       -- python formatter
+    'gofumpt',     -- go formatter
+    'rustfmt',     -- rust formatter
+    
+    -- Linters
+    'eslint_d',    -- js/ts linter
+    'flake8',      -- python linter
+    'golangci-lint', -- go linter
+    
+    -- Additional tools you might want
+    -- 'shfmt',    -- shell formatter
+    -- 'shellcheck', -- shell linter
+  },
+  
+  -- Auto-update tools
+  auto_update = false,
+  
+  -- Run on start (can be slow)
+  run_on_start = true,
 }
 
 mason_lspconfig.setup_handlers {
