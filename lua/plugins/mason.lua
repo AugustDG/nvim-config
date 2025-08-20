@@ -1,4 +1,14 @@
 -- [[ Configure LSP ]]
+--
+-- QUICK START GUIDE:
+-- 1. Open Mason UI with <leader>m to see all available tools
+-- 2. To add a new language server:
+--    - Add it to the 'servers' table below
+--    - Restart neovim (tools auto-install)
+--    - Start coding!
+-- 3. Use :Format to format manually, :FormatToggle to toggle auto-format
+-- 4. Use :LspInfo to see what servers are attached to current buffer
+--
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
@@ -48,11 +58,11 @@ end
 require('mason').setup {
   ui = {
     icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗"
-    }
-  }
+      package_installed = '✓',
+      package_pending = '➜',
+      package_uninstalled = '✗',
+    },
+  },
 }
 
 require('mason-lspconfig').setup()
@@ -68,34 +78,34 @@ require('mason-lspconfig').setup()
 --
 -- Popular servers are enabled by default. To add a new server:
 -- 1. Add it to this servers table
--- 2. Install with :Mason or restart neovim 
+-- 2. Install with :Mason or restart neovim
 -- 3. Configure any special settings if needed
 local servers = {
   -- Web Development
-  html = { filetypes = { 'html', 'twig', 'hbs'} },
+  html = { filetypes = { 'html', 'twig', 'hbs' } },
   cssls = {},
-  
-  -- JavaScript/TypeScript  
+
+  -- JavaScript/TypeScript
   tsserver = {},
-  
+
   -- Python
   pyright = {},
-  
+
   -- Go
   gopls = {},
-  
+
   -- Rust
   rust_analyzer = {},
-  
+
   -- C/C++
   clangd = {},
-  
+
   -- JSON
   jsonls = {},
-  
+
   -- YAML
   yamlls = {},
-  
+
   -- Lua (with special nvim configuration)
   lua_ls = {
     Lua = {
@@ -125,25 +135,25 @@ mason_lspconfig.setup {
 require('mason-tool-installer').setup {
   ensure_installed = {
     -- Formatters
-    'prettier',     -- js/ts/html/css formatter
-    'stylua',      -- lua formatter  
-    'black',       -- python formatter
-    'gofumpt',     -- go formatter
-    'rustfmt',     -- rust formatter
-    
+    'prettier', -- js/ts/html/css formatter
+    'stylua', -- lua formatter
+    'black', -- python formatter
+    'gofumpt', -- go formatter
+    'rustfmt', -- rust formatter
+
     -- Linters
-    'eslint_d',    -- js/ts linter
-    'flake8',      -- python linter
+    'eslint_d', -- js/ts linter
+    'flake8', -- python linter
     'golangci-lint', -- go linter
-    
+
     -- Additional tools you might want
     -- 'shfmt',    -- shell formatter
     -- 'shellcheck', -- shell linter
   },
-  
+
   -- Auto-update tools
   auto_update = false,
-  
+
   -- Run on start (can be slow)
   run_on_start = true,
 }

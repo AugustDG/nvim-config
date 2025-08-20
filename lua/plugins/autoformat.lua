@@ -1,5 +1,9 @@
 -- Use your language server to automatically format your code on save.
 -- Adds additional commands as well to manage the behavior
+--
+-- NOTE: For formatting with external tools (like prettier, black, etc.),
+-- this config relies on LSP servers that support formatting. For standalone
+-- formatters, consider using plugins like 'conform.nvim' or 'null-ls.nvim'.
 
 -- Switch for controlling whether you want autoformatting.
 --  Use :FormatToggle to toggle autoformatting on or off
@@ -9,7 +13,7 @@ vim.api.nvim_create_user_command('FormatToggle', function()
   print('Setting autoformatting to: ' .. tostring(format_is_enabled))
 end, { desc = 'Toggle autoformatting on save' })
 
--- Additional command to show current format status  
+-- Additional command to show current format status
 vim.api.nvim_create_user_command('FormatStatus', function()
   print('Autoformatting is currently: ' .. (format_is_enabled and 'enabled' or 'disabled'))
 end, { desc = 'Show current autoformat status' })

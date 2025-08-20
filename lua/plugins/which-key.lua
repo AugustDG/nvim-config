@@ -1,4 +1,4 @@
-require('which-key').setup({})
+require('which-key').setup {}
 
 -- document existing key chains
 require('which-key').register {
