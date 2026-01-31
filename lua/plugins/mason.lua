@@ -1,12 +1,12 @@
 return {
-  "mason-org/mason.nvim",
-  build = ":MasonUpdate",
+  'williamboman/mason.nvim',
   cmd = {
-    "Mason",
-    "MasonInstall",
-    "MasonUninstall",
-    "MasonUninstallAll",
-    "MasonLog",
+    'Mason',
+    'MasonInstall',
+    'MasonUninstall',
+    'MasonUninstallAll',
+    'MasonLog',
   },
+  build = ':MasonUpdate',
   opts = {},
 }

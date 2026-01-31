@@ -1,14 +1,7 @@
 return {
-  "mason-org/mason-lspconfig.nvim",
-  event = "BufReadPost",
+  'williamboman/mason-lspconfig.nvim',
   dependencies = {
-    "mason-org/mason.nvim",
-    "neovim/nvim-lspconfig",
+    'williamboman/mason.nvim',
   },
-  opts = {
-    ensure_installed = {
-      "lua_ls",
-    },
-    automatic_installation = true,
-  },
+  opts = {},
 }

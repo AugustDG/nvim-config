@@ -1,5 +1,6 @@
-require("config-local").setup({
-  config_files = { ".nvim.lua" },
-})
-
-return {}
+return {
+  'klen/nvim-config-local',
+  opts = {
+    config_files = { '.nvim.lua' },
+  },
+}
