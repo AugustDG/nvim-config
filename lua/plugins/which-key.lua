@@ -4,7 +4,7 @@ return {
   opts = {
     spec = {
       { '<leader>c', group = '[C]ode' },
-      { '<leader>d', group = '[D]ocument' },
+      { '<leader>d', group = '[D]ebug' },
       { '<leader>g', group = '[G]it' },
       { '<leader>h', group = 'Git [H]unk' },
       { '<leader>r', group = '[R]ename' },
