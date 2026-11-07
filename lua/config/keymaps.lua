@@ -32,6 +32,13 @@ map('n', '<S-F2>', function() vim.diagnostic.jump({ count = -1, float = true }) 
 map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Line diagnostics' })
 map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostics to loclist' })
 
+-- xterm-style terminals send Shift-F1..F12 as F13..F24 and Ctrl-F1..F12 as
+-- F25..F36. Alias them so <S-Fn> and <C-Fn> mappings work everywhere.
+for i = 1, 12 do
+  map({ 'n', 'i', 'x', 'o' }, ('<F%d>'):format(i + 12), ('<S-F%d>'):format(i), { remap = true })
+  map({ 'n', 'i', 'x', 'o' }, ('<F%d>'):format(i + 24), ('<C-F%d>'):format(i), { remap = true })
+end
+
 -- Show how key chords reach nvim, to check what the terminal and tmux pass through.
 vim.api.nvim_create_user_command('KeyTest', function()
   local seen = {}
