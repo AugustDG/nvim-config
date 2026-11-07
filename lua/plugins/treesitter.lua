@@ -16,6 +16,17 @@ return {
     local ts = require('nvim-treesitter')
     if vim.fn.executable('tree-sitter') == 1 then
       ts.install(ensure)
+    else
+      -- Fresh machine: install parsers once Mason has fetched the CLI
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'MasonToolsUpdateCompleted',
+        once = true,
+        callback = function()
+          if vim.fn.executable('tree-sitter') == 1 then
+            ts.install(ensure)
+          end
+        end,
+      })
     end
 
     local available = {}
