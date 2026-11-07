@@ -33,9 +33,9 @@ local servers = {
 
 local function configure_servers()
   vim.lsp.config('*', {
-    capabilities = {
+    capabilities = require('blink.cmp').get_lsp_capabilities({
       workspace = { fileOperations = { didRename = true, willRename = true } },
-    },
+    }),
   })
 
   local ts_settings = {
@@ -109,21 +109,30 @@ local function on_attach(args)
     client.server_capabilities.hoverProvider = false
   end
 
-  -- Navigation (Nvim also provides grr, gri, grt, grn, gra, gO, K)
-  map('n', 'gd', vim.lsp.buf.definition, 'Go to definition')
-  map('n', 'gD', vim.lsp.buf.declaration, 'Go to declaration')
+  -- Navigation, with results in snacks.picker
+  local function pick(source)
+    return function()
+      Snacks.picker[source]()
+    end
+  end
+  map('n', 'gd', pick('lsp_definitions'), 'Go to definition')
+  map('n', 'gD', pick('lsp_declarations'), 'Go to declaration')
+  map('n', 'grr', pick('lsp_references'), 'Find usages')
+  map('n', 'gri', pick('lsp_implementations'), 'Go to implementation')
+  map('n', 'grt', pick('lsp_type_definitions'), 'Go to type definition')
 
   -- JetBrains chords, each with a leader equivalent
   map({ 'n', 'x' }, '<A-CR>', vim.lsp.buf.code_action, 'Code action')
   map({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, 'Code action')
   map('n', '<S-F6>', vim.lsp.buf.rename, 'Rename')
   map('n', '<leader>cr', vim.lsp.buf.rename, 'Rename')
-  map('n', '<A-F7>', vim.lsp.buf.references, 'Find usages')
-  map('n', '<leader>cu', vim.lsp.buf.references, 'Find usages')
-  map('n', '<C-A-b>', vim.lsp.buf.implementation, 'Go to implementation')
-  map('n', '<leader>ci', vim.lsp.buf.implementation, 'Go to implementation')
-  map('n', '<C-S-b>', vim.lsp.buf.type_definition, 'Go to type definition')
-  map('n', '<leader>ct', vim.lsp.buf.type_definition, 'Go to type definition')
+  map('n', '<A-F7>', pick('lsp_references'), 'Find usages')
+  map('n', '<leader>cu', pick('lsp_references'), 'Find usages')
+  map('n', '<C-A-b>', pick('lsp_implementations'), 'Go to implementation')
+  map('n', '<leader>ci', pick('lsp_implementations'), 'Go to implementation')
+  map('n', '<C-S-b>', pick('lsp_type_definitions'), 'Go to type definition')
+  map('n', '<leader>ct', pick('lsp_type_definitions'), 'Go to type definition')
+  map('n', '<leader>cs', pick('lsp_incoming_calls'), 'Call hierarchy (incoming)')
 
   if client:supports_method('textDocument/inlayHint') then
     map('n', '<leader>th', function()
@@ -155,7 +164,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = { 'mason-org/mason.nvim' },
+    dependencies = { 'mason-org/mason.nvim', 'saghen/blink.cmp' },
     config = function()
       vim.diagnostic.config({
         severity_sort = true,
