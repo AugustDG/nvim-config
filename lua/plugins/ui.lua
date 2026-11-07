@@ -33,6 +33,7 @@ return {
         { '<leader>g', group = 'Git' },
         { '<leader>s', group = 'Search' },
         { '<leader>t', group = 'Toggle' },
+        { '<leader>x', group = 'Lists' },
       },
     },
   },

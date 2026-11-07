@@ -7,6 +7,8 @@ map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Move by display line when no count is given
 map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map({ 'n', 'x' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
 -- Save (Ctrl-S)
 map({ 'n', 'i', 'x' }, '<C-s>', '<cmd>silent! wall<CR><Esc>', { desc = 'Save all' })
@@ -59,7 +61,6 @@ map('n', '<leader>d', submode.create({
   },
 }), { desc = 'Problems mode' })
 map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Line diagnostics' })
-map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Diagnostics to loclist' })
 
 -- xterm-style terminals send Shift-F1..F12 as F13..F24 and Ctrl-F1..F12 as
 -- F25..F36. Alias them so <S-Fn> and <C-Fn> mappings work everywhere.
