@@ -24,10 +24,43 @@ map('n', '<A-S-Up>', '<cmd>move .-2<CR>==', { desc = 'Move line up' })
 map('n', '<A-S-Down>', '<cmd>move .+1<CR>==', { desc = 'Move line down' })
 map('x', '<A-S-Up>', ":move '<-2<CR>gv=gv", { silent = true, desc = 'Move selection up' })
 map('x', '<A-S-Down>', ":move '>+1<CR>gv=gv", { silent = true, desc = 'Move selection down' })
-map('n', '<leader>mk', '<cmd>move .-2<CR>==', { desc = 'Move line up' })
-map('n', '<leader>mj', '<cmd>move .+1<CR>==', { desc = 'Move line down' })
-map('x', '<leader>mk', ":move '<-2<CR>gv=gv", { silent = true, desc = 'Move selection up' })
-map('x', '<leader>mj', ":move '>+1<CR>gv=gv", { silent = true, desc = 'Move selection down' })
+
+-- Move mode (<leader>m): j/k or Up/Down keep moving the line or selection; any
+-- other key exits (and runs, unless it is Esc). All moves undo as one step.
+local function move_mode()
+  local visual = vim.fn.mode():match('[vV\22]') ~= nil
+  if visual then
+    vim.cmd('normal! \27') -- leave visual so '< and '> are set
+  end
+  local up, down = vim.keycode('<Up>'), vim.keycode('<Down>')
+  local moved = false
+  while true do
+    vim.api.nvim_echo({ { '-- MOVE -- j/k to move, any other key to exit', 'ModeMsg' } }, false, {})
+    vim.cmd.redraw()
+    local ok, key = pcall(vim.fn.getcharstr)
+    local dir = ok and ((key == 'j' or key == down) and 1 or (key == 'k' or key == up) and -1) or nil
+    if not dir then
+      if ok and key ~= '\27' then
+        vim.api.nvim_feedkeys(key, 'm', false)
+      end
+      break
+    end
+    if moved then
+      pcall(vim.cmd.undojoin)
+    end
+    local range = visual and "'<,'>" or '.'
+    local target = dir == 1 and (visual and "'>+1" or '.+1') or (visual and "'<-2" or '.-2')
+    if pcall(vim.cmd, ('silent %smove %s'):format(range, target)) then
+      moved = true
+      vim.cmd(visual and "silent normal! '<=']" or 'silent normal! ==')
+    end
+  end
+  vim.api.nvim_echo({ { '' } }, false, {})
+  if visual then
+    vim.cmd('normal! gv')
+  end
+end
+map({ 'n', 'x' }, '<leader>m', move_mode, { desc = 'Move mode (j/k)' })
 
 -- Keep selection when indenting
 map('x', '<', '<gv')
