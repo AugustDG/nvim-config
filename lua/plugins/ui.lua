@@ -29,6 +29,8 @@ return {
       preset = 'modern',
       spec = {
         { '<leader>c', group = 'Code' },
+        { '<leader>d', group = 'Diagnostics' },
+        { '<leader>m', group = 'Move', mode = { 'n', 'x' } },
         { '<leader>g', group = 'Git' },
         { '<leader>s', group = 'Search' },
         { '<leader>t', group = 'Toggle' },
