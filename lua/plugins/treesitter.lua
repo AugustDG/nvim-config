@@ -27,6 +27,9 @@ return {
 
     -- Start highlighting in already-open buffers whose parser just arrived
     local function start_loaded()
+      -- Nvim caches runtime file lookups; a parser dir created during this
+      -- session stays invisible until 'runtimepath' is set again.
+      vim.o.runtimepath = vim.o.runtimepath
       for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_is_loaded(buf) and not vim.treesitter.highlighter.active[buf] then
           local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
