@@ -19,8 +19,26 @@ return {
     vim.api.nvim_create_user_command('TSInstallConfigured', function()
       ts.install(ensure):wait(600000)
     end, { desc = 'Install configured treesitter parsers (blocking)' })
+    local function start(buf, lang)
+      if pcall(vim.treesitter.start, buf, lang) then
+        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end
+    end
+
+    -- Start highlighting in already-open buffers whose parser just arrived
+    local function start_loaded()
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf) and not vim.treesitter.highlighter.active[buf] then
+          local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
+          if lang and vim.treesitter.language.add(lang) then
+            start(buf, lang)
+          end
+        end
+      end
+    end
+
     if vim.fn.executable('tree-sitter') == 1 then
-      ts.install(ensure)
+      ts.install(ensure):await(vim.schedule_wrap(start_loaded))
     else
       -- Fresh machine: install parsers once Mason has fetched the CLI
       vim.api.nvim_create_autocmd('User', {
@@ -28,7 +46,7 @@ return {
         once = true,
         callback = function()
           if vim.fn.executable('tree-sitter') == 1 then
-            ts.install(ensure)
+            ts.install(ensure):await(vim.schedule_wrap(start_loaded))
           end
         end,
       })
@@ -39,11 +57,6 @@ return {
       available[lang] = true
     end
 
-    local function start(buf, lang)
-      if pcall(vim.treesitter.start, buf, lang) then
-        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-      end
-    end
 
     vim.api.nvim_create_autocmd('FileType', {
       group = vim.api.nvim_create_augroup('config-treesitter', { clear = true }),
