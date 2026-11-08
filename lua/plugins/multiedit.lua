@@ -96,13 +96,13 @@ return {
           { { 'k', '<Up>' }, function() mc.lineAddCursor(-1) end, 'above' },
           { 'a', mc.matchAllAddCursors, 'all' },
           { 'x', mc.deleteCursor, 'del' },
+          { 'r', mc.restoreCursors, 'restore' },
         },
       }), { desc = 'Cursor mode' })
       -- ga{motion}: a cursor on each line (e.g. gaip for a paragraph)
       map({ 'n', 'x' }, 'ga', mc.addCursorOperator, { desc = 'Add cursors over motion' })
       map('x', 'M', mc.matchCursors, { desc = 'Cursors at regex matches in selection' })
       map('x', 'S', mc.splitCursors, { desc = 'Split selection by regex' })
-      map('n', '<leader>gv', mc.restoreCursors, { desc = 'Restore cursors' })
 
       -- Only while several cursors exist
       mc.addKeymapLayer(function(layer)
