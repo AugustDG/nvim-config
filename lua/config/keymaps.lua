@@ -2,7 +2,21 @@ local map = vim.keymap.set
 local submode = require('config.submode')
 
 map({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-map('n', '<Esc>', '<cmd>nohlsearch<CR>')
+-- Esc: clear multicursor cursors, else close the tool view (float, git tab,
+-- quickfix, help, ...) and return to the previous view, else clear search
+-- highlight.
+map('n', '<Esc>', function()
+  local mc = package.loaded['multicursor-nvim']
+  if mc and mc.hasCursors() then
+    if mc.cursorsEnabled() then
+      mc.clearCursors()
+    else
+      mc.enableCursors()
+    end
+  elseif not require('config.close').close() then
+    vim.cmd.nohlsearch()
+  end
+end, { desc = 'Clear cursors / close tool view / clear highlight' })
 
 -- Move by display line when no count is given
 map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })

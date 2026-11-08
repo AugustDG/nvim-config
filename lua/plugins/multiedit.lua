@@ -110,20 +110,6 @@ return {
         layer({ 'n', 'x' }, '<Right>', mc.nextCursor)
       end)
 
-      -- Esc: clear cursors (or re-enable disabled ones), else clear search
-      -- highlight. Global rather than in the layer so submodes can override it.
-      map('n', '<Esc>', function()
-        if mc.hasCursors() then
-          if mc.cursorsEnabled() then
-            mc.clearCursors()
-          else
-            mc.enableCursors()
-          end
-        else
-          vim.cmd.nohlsearch()
-        end
-      end, { desc = 'Clear cursors / search highlight' })
-
       local hl = vim.api.nvim_set_hl
       hl(0, 'MultiCursorCursor', { reverse = true })
       hl(0, 'MultiCursorVisual', { link = 'Visual' })

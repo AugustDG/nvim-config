@@ -102,7 +102,7 @@ return {
     opts = {
       explorer = { view_mode = 'tree' },
       keymaps = {
-        view = { quit = 'q' },
+        view = { quit = { 'q', '<Esc>' } },
         -- Keep <leader>c for code actions; conflicts live under <leader>g
         conflict = {
           accept_incoming = '<leader>gt',

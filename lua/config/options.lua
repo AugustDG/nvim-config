@@ -13,6 +13,7 @@ o.sidescrolloff = 8
 o.smoothscroll = true
 o.splitright = true
 o.splitbelow = true
+o.tabclose = 'uselast' -- closing a tab returns to the previously used one
 o.winborder = 'rounded'
 o.pumheight = 12
 o.list = true
