@@ -14,6 +14,11 @@ return {
   dependencies = { 'mason-org/mason.nvim' }, -- tree-sitter CLI comes from Mason
   config = function()
     local ts = require('nvim-treesitter')
+
+    -- Install all configured parsers and wait (for headless bootstrap)
+    vim.api.nvim_create_user_command('TSInstallConfigured', function()
+      ts.install(ensure):wait(600000)
+    end, { desc = 'Install configured treesitter parsers (blocking)' })
     if vim.fn.executable('tree-sitter') == 1 then
       ts.install(ensure)
     else

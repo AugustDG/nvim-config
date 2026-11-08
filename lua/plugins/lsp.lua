@@ -160,6 +160,12 @@ return {
     event = 'VeryLazy',
     dependencies = { 'mason-org/mason.nvim' },
     opts = { ensure_installed = tools, run_on_start = true },
+    config = function(_, opts)
+      local mti = require('mason-tool-installer')
+      mti.setup(opts)
+      -- Its own trigger is VimEnter, which has passed by VeryLazy
+      mti.run_on_start()
+    end,
   },
   {
     'neovim/nvim-lspconfig',
