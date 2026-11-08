@@ -74,6 +74,7 @@ return {
         { '<leader>f', group = 'Files' },
         { '<leader>g', group = 'Git' },
         { '<leader>h', group = 'Hunks' },
+        { '<leader>p', group = 'Session' },
         { '<leader>s', group = 'Search' },
         { '<leader>t', group = 'Toggle' },
         { '<leader>x', group = 'Lists' },

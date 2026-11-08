@@ -56,4 +56,26 @@ function M.close()
   return false
 end
 
+--- Close every tool view in all tabs (used before saving a session).
+function M.close_all_tools()
+  for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+    for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
+      local ft = vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+      if ft:match('^codediff') or matches(ft, tab_tools) then
+        if #vim.api.nvim_list_tabpages() > 1 then
+          pcall(vim.cmd.tabclose, vim.api.nvim_tabpage_get_number(tab))
+        end
+        break
+      end
+    end
+  end
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local ft = vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+    local float = vim.api.nvim_win_get_config(win).relative ~= ''
+    if float or matches(ft, window_tools) then
+      pcall(vim.api.nvim_win_close, win, false)
+    end
+  end
+end
+
 return M
