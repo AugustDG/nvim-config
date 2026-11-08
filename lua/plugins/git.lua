@@ -71,8 +71,8 @@ return {
       signs = {
         add = { text = '▎' },
         change = { text = '▎' },
-        delete = { text = '' },
-        topdelete = { text = '' },
+        delete = { text = '\u{f0da}' },
+        topdelete = { text = '\u{f0da}' },
         changedelete = { text = '▎' },
         untracked = { text = '▎' },
       },

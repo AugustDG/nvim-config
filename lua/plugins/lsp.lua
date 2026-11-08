@@ -173,10 +173,10 @@ return {
         float = { source = true },
         signs = {
           text = {
-            [vim.diagnostic.severity.ERROR] = '',
-            [vim.diagnostic.severity.WARN] = '',
-            [vim.diagnostic.severity.INFO] = '',
-            [vim.diagnostic.severity.HINT] = '',
+            [vim.diagnostic.severity.ERROR] = '\u{f057}',
+            [vim.diagnostic.severity.WARN] = '\u{f071}',
+            [vim.diagnostic.severity.INFO] = '\u{f05a}',
+            [vim.diagnostic.severity.HINT] = '\u{f0eb}',
           },
         },
       })

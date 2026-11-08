@@ -17,7 +17,7 @@ o.winborder = 'rounded'
 o.pumheight = 12
 o.list = true
 o.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-o.fillchars = { eob = ' ' }
+o.fillchars = { eob = ' ', fold = ' ', foldopen = '\u{f078}', foldclose = '\u{f054}', foldsep = ' ' }
 
 -- Editing
 o.mouse = 'a'
@@ -29,6 +29,13 @@ o.softtabstop = 4
 o.expandtab = true
 o.virtualedit = 'block'
 o.confirm = true
+
+-- Folds from treesitter, all open by default
+o.foldmethod = 'expr'
+o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+o.foldtext = '' -- show the first line with its highlighting
+o.foldlevel = 99
+o.foldlevelstart = 99
 
 -- Search
 o.ignorecase = true
