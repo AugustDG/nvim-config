@@ -14,6 +14,10 @@ return {
   dependencies = { 'mason-org/mason.nvim' }, -- tree-sitter CLI comes from Mason
   config = function()
     local ts = require('nvim-treesitter')
+    -- An explicit install_dir is added to 'runtimepath'. On a fresh machine
+    -- the default one doesn't exist at startup and would be left out, so
+    -- parsers installed in the first session would not be found.
+    ts.setup({ install_dir = vim.fn.stdpath('data') .. '/site' })
 
     -- Install all configured parsers and wait (for headless bootstrap)
     vim.api.nvim_create_user_command('TSInstallConfigured', function()
@@ -27,9 +31,6 @@ return {
 
     -- Start highlighting in already-open buffers whose parser just arrived
     local function start_loaded()
-      -- Nvim caches runtime file lookups; a parser dir created during this
-      -- session stays invisible until 'runtimepath' is set again.
-      vim.o.runtimepath = vim.o.runtimepath
       for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_is_loaded(buf) and not vim.treesitter.highlighter.active[buf] then
           local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
