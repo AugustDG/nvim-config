@@ -10,6 +10,7 @@ local keys = {
   -- { chord, leader, action, desc }
   { nil, '<leader><leader>', pick('smart', { filter = { cwd = true } }), 'Search everywhere' },
   { '<C-e>', '<leader>fr', pick('recent', { filter = { cwd = true } }), 'Recent files' },
+  { nil, '<leader>r', pick('recent', { filter = { cwd = true } }), 'Recent files' },
   { '<C-S-n>', '<leader>ff', pick('files'), 'Go to file' },
   { nil, '<leader>fa', pick('files', { hidden = true, ignored = true }), 'Go to file (all)' },
   { nil, '<leader>fb', pick('buffers'), 'Open buffers' },
