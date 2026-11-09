@@ -127,8 +127,8 @@ return {
       local create = view.create
       view.create = function(...)
         local cols = vim.o.columns
-        options.explorer.position = cols >= 160 and 'left' or 'bottom'
-        options.diff.layout = cols >= 100 and 'side-by-side' or 'inline'
+        options.explorer.position = cols >= 200 and 'left' or 'bottom'
+        options.diff.layout = cols >= 90 and 'side-by-side' or 'inline'
         return create(...)
       end
     end,
