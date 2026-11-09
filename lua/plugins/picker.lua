@@ -48,6 +48,9 @@ return {
       layout = { preset = 'default' }, -- input on top, results below, preview right
       matcher = { frecency = true, cwd_bonus = true },
       formatters = { file = { filename_first = true } },
+      sources = {
+        files = { hidden = true, ignored = true }, -- dotfiles and gitignored files too
+      },
       win = {
         input = {
           keys = {
