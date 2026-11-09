@@ -49,7 +49,30 @@ return {
       { '<A-Home>', function() require('dropbar.api').pick() end, desc = 'Navigation bar' },
       { '<leader>fn', function() require('dropbar.api').pick() end, desc = 'Navigation bar' },
     },
-    opts = {},
+    opts = {
+      sources = {
+        path = {
+          -- Start the path at the nearest git root (cwd outside a repo).
+          -- codediff:///<root>///<rev>/<file> buffers start at <root>/<rev>.
+          relative_to = function(buf, win)
+            local name = vim.api.nvim_buf_get_name(buf)
+            local root, rev = name:match('^codediff://(.-)///([^/]+)/')
+            if root then
+              return root .. '/' .. rev
+            end
+            if vim.b[buf].dropbar_root_for ~= name then
+              vim.b[buf].dropbar_root_for = name
+              vim.b[buf].dropbar_root = vim.fs.root(buf, '.git') or false
+            end
+            if vim.b[buf].dropbar_root then
+              return vim.b[buf].dropbar_root
+            end
+            local ok, cwd = pcall(vim.fn.getcwd, win)
+            return ok and cwd or vim.fn.getcwd()
+          end,
+        },
+      },
+    },
   },
   {
     'folke/snacks.nvim',
