@@ -100,7 +100,7 @@ return {
     cmd = 'CodeDiff',
     build = ':CodeDiff install', -- fetch the diff library now, not on first use
     opts = {
-      explorer = { view_mode = 'tree' },
+      explorer = { view_mode = 'tree', position = 'bottom' },
       keymaps = {
         view = { quit = { 'q', '<Esc>' } },
         -- Keep <leader>c for code actions; conflicts live under <leader>g
@@ -118,17 +118,13 @@ return {
     },
     config = function(_, opts)
       require('codediff').setup(opts)
-      -- Pick the layout from the editor width each time a view opens:
-      -- wide: explorer left, panes side by side
-      -- medium: explorer below, panes side by side
-      -- narrow: explorer below, single inline pane
+      -- Pick the diff layout from the editor width each time a view opens:
+      -- panes side by side, or a single inline pane when narrow
       local options = require('codediff.config').options
       local view = require('codediff.ui.view')
       local create = view.create
       view.create = function(...)
-        local cols = vim.o.columns
-        options.explorer.position = cols >= 200 and 'left' or 'bottom'
-        options.diff.layout = cols >= 90 and 'side-by-side' or 'inline'
+        options.diff.layout = vim.o.columns >= 90 and 'side-by-side' or 'inline'
         return create(...)
       end
     end,
