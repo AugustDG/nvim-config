@@ -116,6 +116,22 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require('codediff').setup(opts)
+      -- Pick the layout from the editor width each time a view opens:
+      -- wide: explorer left, panes side by side
+      -- medium: explorer below, panes side by side
+      -- narrow: explorer below, single inline pane
+      local options = require('codediff.config').options
+      local view = require('codediff.ui.view')
+      local create = view.create
+      view.create = function(...)
+        local cols = vim.o.columns
+        options.explorer.position = cols >= 160 and 'left' or 'bottom'
+        options.diff.layout = cols >= 100 and 'side-by-side' or 'inline'
+        return create(...)
+      end
+    end,
   },
   {
     'NeogitOrg/neogit',
