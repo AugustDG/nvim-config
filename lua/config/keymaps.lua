@@ -24,6 +24,19 @@ map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true
 map({ 'n', 'x' }, '<Down>', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map({ 'n', 'x' }, '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
+-- Wheel over a scroll-bound window (diff panes) focuses it first, since
+-- scrollbind only follows the current window.
+for _, key in ipairs({ '<ScrollWheelUp>', '<ScrollWheelDown>' }) do
+  local raw = vim.keycode(key)
+  map({ 'n', 'x' }, key, function()
+    local win = vim.fn.getmousepos().winid
+    if win ~= 0 and win ~= vim.api.nvim_get_current_win() and vim.wo[win].scrollbind then
+      vim.api.nvim_set_current_win(win)
+    end
+    vim.api.nvim_feedkeys(raw, 'in', false)
+  end, { desc = 'Scroll (keeps scroll-bound panes in sync)' })
+end
+
 -- Save (Ctrl-S)
 map({ 'n', 'i', 'x' }, '<C-s>', '<cmd>silent! wall<CR><Esc>', { desc = 'Save all' })
 map('n', '<leader>w', '<cmd>silent! wall<CR>', { desc = 'Save all' })
